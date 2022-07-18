@@ -7,7 +7,7 @@ Esta documentación muestra varias formas de desplegar firefly-fabconnect:
 
  > **NOTA**: El modo `FireFly CLI` ejecuta algunos supernodos en su máquina. El stack contiene una instancia de firefly-core, firefly-dataexchange-https, ipfs y firefly-sandbox.
 
-For English speaking visit [README-EN](./README.md).
+👀 For English speaking visit [README-EN](./README.md).
 
 ## Tabla de contenido
 

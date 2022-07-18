@@ -1,4 +1,4 @@
-# Bring up fireflyfabconnect
+# Bring up firefly-fabconnect
 
 This documentation shows several ways to deploy firefly-fabconnect:
 - Using `fabconnect` and the [Fabric `test-network`](https://github.com/hyperledger/fabric-samples/tree/main/test-network) in the samples repository.
@@ -7,7 +7,7 @@ This documentation shows several ways to deploy firefly-fabconnect:
 
   > **NOTE**: The `FireFly CLI` run some Supernodes on your machine. The stacks contains an instance of firefly-core, firefly-dataexchange-https, ipfs and the firefly-sandbox.
 
-  Si entiendes el español no dudes en visitar el [README-ES](./README-ES.md).
+  👀 Si entiendes el español no dudes en visitar el [README-ES](./README-ES.md).
   
 ## Table of Contents
 
