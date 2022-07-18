@@ -1,0 +1,40 @@
+maxinflight: 10
+maxtxwaittime: 60
+sendconcurrency: 25
+receipts:
+  maxdocs: 1000
+  querylimit: 100
+  retryinitialdelay: 5
+  retrytimeout: 30
+  leveldb:
+    path: /fabconnect/receipts
+events:
+  webhooksAllowPrivateIPs: true
+  leveldb:
+    path: /fabconnect/events
+http:
+  port: 3000
+rpc:
+  useGatewayClient: true
+  configpath: /fabconnect/ccp.yaml
+# maxinflight: 10
+# maxtxwaittime: 60
+# sendconcurrency: 25
+# receipts:
+#   maxdocs: 1000
+#   querylimit: 100
+#   retryinitialdelay: 5
+#   retrytimeout: 30
+#   leveldb:
+#     path: /home/kmilo/fabconnect/runtime/blockchain/receipts
+# events:
+#   webhooksAllowPrivateIPs: true
+#   leveldb:
+#     path: /home/kmilo/fabconnect/runtime/blockchain/events
+# http:
+#   port: 3000
+#   address: 0.0.0.0
+#   publicURL: http://79.110.52.73:3000
+# rpc:
+#   # configpath: /home/kmilo/fabconnect/runtime/blockchain/connection-org1.yaml
+#   configpath: /home/kmilo/fabconnect/runtime/blockchain/ccp_testnetwork.yaml

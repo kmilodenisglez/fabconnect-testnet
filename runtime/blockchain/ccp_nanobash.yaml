@@ -1,0 +1,66 @@
+certificateAuthorities:
+  org1.example.com:
+    tlsCACerts:
+      path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
+    url: http://127.0.0.1:7054
+    registrar:
+      enrollId: admin
+      enrollSecret: adminpw
+channels:
+  mychannel:
+    orderers:
+    - fabric_orderer
+    - fabric_orderer2
+    peers:
+      fabric_peer:
+        chaincodeQuery: true
+        endorsingPeer: true
+        eventSource: true
+        ledgerQuery: true
+client:
+  BCCSP:
+    security:
+      default:
+        provider: SW
+      enabled: true
+      hashAlgorithm: SHA2
+      level: 256
+      softVerify: true
+  credentialStore:
+    cryptoStore:
+      path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users
+    path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users
+  cryptoconfig:
+    path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users
+  logging:
+    level: info
+  organization: org1.example.com
+  tlsCerts:
+    client:
+      cert:
+        path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
+      key:
+        path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
+orderers:
+  fabric_orderer:
+    tlsCACerts:
+      path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+    url: grpcs://127.0.0.1:6050
+  fabric_orderer2:
+    tlsCACerts:
+      path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+    url: grpcs://127.0.0.1:6051
+organizations:
+  org1.example.com:
+    certificateAuthorities:
+    - org1.example.com
+    cryptoPath: /tmp/msp
+    mspid: Org1MSP
+    peers:
+    - fabric_peer
+peers:
+  fabric_peer:
+    tlsCACerts:
+      path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+    url: grpcs://127.0.0.1:7051
+version: 1.1.0%

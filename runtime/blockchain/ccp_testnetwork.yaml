@@ -1,0 +1,103 @@
+certificateAuthorities:
+  ca.org1.example.com:
+    tlsCACerts:
+      path: /etc/firefly/organizations/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
+    url: https://org1.example.com:7054
+    registrar:
+      enrollId: admin
+      enrollSecret: adminpw
+    httpOptions:
+      verify: false
+channels:
+  mychannel:
+    # orderers:
+    # - orderer1
+    peers:
+      peer1.org1.com:
+        chaincodeQuery: true
+        endorsingPeer: true
+        eventSource: true
+        ledgerQuery: true
+client:
+  BCCSP:
+    security:
+      default:
+        provider: SW
+      enabled: true
+      hashAlgorithm: SHA2
+      level: 256
+      softVerify: true
+  credentialStore:
+    cryptoStore:
+      path: /etc/firefly/organizations/peerOrganizations/org1.example.com/users
+    path: /etc/firefly/organizations/peerOrganizations/org1.example.com/users
+  cryptoconfig:
+    path: /etc/firefly/organizations/peerOrganizations/org1.example.com/users
+  logging:
+    level: info
+  organization: org1
+orderers:
+  orderer1:
+    tlsCACerts:
+      path: /etc/firefly/organizations/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+    url: grpcs://orderer.example.com:7050
+organizations:
+  org1:
+    certificateAuthorities:
+    - ca.org1.example.com
+    cryptoPath: /etc/firefly/organizations/fabric-ca/org1/msp
+    mspid: Org1MSP
+    peers:
+    - peer1.org1.com
+  org2:
+    cryptoPath: /etc/firefly/organizations/fabric-ca/org2/msp
+    mspid: Org2MSP
+peers:
+  peer1.org1.com:
+    tlsCACerts:
+      path: /etc/firefly/organizations/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+    url: grpcs://peer0.org1.example.com:7051
+    # grpcOptions:
+    #   ssl-target-name-override: peer0.org1.example.com
+    #   hostnameOverride: peer0.org1.example.com
+version: 1.1.0%
+
+entityMatchers:
+  peer:
+    - pattern: peer0.org1.example.(\w+)
+      urlSubstitutionExp: localhost:7051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
+      mappedHost: peer0.org1.example.com
+
+    - pattern: (\w+).org1.example.(\w+):(\d+)
+      urlSubstitutionExp: localhost:${2}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org1.example.com
+      mappedHost: ${1}.org1.example.com
+
+    - pattern: (\w+):7051
+      urlSubstitutionExp: localhost:7051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
+      mappedHost: peer0.org1.example.com
+
+  orderer:
+
+    - pattern: (\w+).example.(\w+)
+      urlSubstitutionExp: localhost:7050
+      sslTargetOverrideUrlSubstitutionExp: orderer.example.com
+      mappedHost: orderer.example.com
+
+    - pattern: (\w+).example.(\w+):(\d+)
+      urlSubstitutionExp: localhost:7050
+      sslTargetOverrideUrlSubstitutionExp: orderer.example.com
+      mappedHost: orderer.example.com
+
+  certificateAuthority:
+    - pattern: (\w+).org1.example.(\w+)
+      urlSubstitutionExp: https://localhost:7054
+      sslTargetOverrideUrlSubstitutionExp: org1.example.com
+      mappedHost: ca.org1.example.com
+
+  #   - pattern: (\w+).org2.example.(\w+)
+  #     urlSubstitutionExp: https://localhost:8054
+  #     sslTargetOverrideUrlSubstitutionExp: ca.org2.example.com
+  #     mappedHost: ca.org2.example.com

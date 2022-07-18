@@ -1,0 +1,35 @@
+version: "2.1"
+services:
+    fabconnect_0:
+        container_name: firefly_fabconnect_0
+        image: ghcr.io/hyperledger/firefly-fabconnect:latest
+        command: -f /fabconnect/fabconnect.yaml
+        volumes:
+            - fabconnect_receipts_0:/fabconnect/receipts
+            - fabconnect_events_0:/fabconnect/events
+            - ./runtime/blockchain/fabconnect.yaml:/fabconnect/fabconnect.yaml
+            - ./runtime/blockchain/ccp_testnetwork.yaml:/fabconnect/ccp.yaml
+            - $HOME/fabric-samples/test-network/organizations:/etc/firefly/organizations
+        network_mode: host
+        dns_search:
+            - 8.8.8.8
+        # extra_hosts:
+        #     - "org1.example.com:127.0.0.11"
+        #     - "org1.example.com:127.0.0.1"
+        # ports:
+            # - 3000:3000
+        healthcheck:
+            test:
+                - CMD
+                - wget
+                - -O
+                - '-'
+                - http://localhost:3000/status
+        logging:
+            driver: json-file
+            options:
+                max-file: "1"
+                max-size: 10m
+volumes:
+    fabconnect_events_0: {}
+    fabconnect_receipts_0: {}
