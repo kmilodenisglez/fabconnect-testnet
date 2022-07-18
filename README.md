@@ -26,7 +26,7 @@ This documentation shows several ways to deploy firefly-fabconnect:
   * [In `firefly-cli` mode](#fabconnect_testnetwork_interacting_cc_mode2)
 - [Documentation](#doc)
 
-## Using fabconnect and the Fabric test-network<a name="fabconnect_testnetwork"></a>
+## Using fabconnect and the Fabric test-network<a name="fabconnect_testnetworknanobash"></a>
 
 ### Download fabric-samples, docker images, and fabric binaries<a name="fabconnect_testnetwork_download_prerequisites"></a>
 
@@ -69,7 +69,7 @@ git clone https://github.com/kmilodenisglez/fabconnect-testnet.git
 ```bash
 cd fabconnect
 ```
-### Bring up `fabconect`<a name="fabconnect_testnetwork_start_fabconnect"></a>
+### Bring up `fabconect`<a name="fabconnect_testnetwork_bringup_fabconnect"></a>
 
 ```bash
 docker-compose up -d
