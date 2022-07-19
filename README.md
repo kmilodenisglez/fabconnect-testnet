@@ -115,6 +115,11 @@ go mod vendor
 go build -o fabconnect
 ```
 
+### Move fabconnect binary to /usr/bin/local
+```bash
+ chmod +x fabconnect && sudo cp fabconnect /usr/local/bin/
+```
+
 ```bash
 cd $HOME
 ```
