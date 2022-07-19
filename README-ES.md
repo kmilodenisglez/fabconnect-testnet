@@ -30,7 +30,7 @@ Esta documentación muestra varias formas de desplegar firefly-fabconnect:
   * [Crea un stack de `Hyperledger Fabric`](#stack_fabric)
   * [Ficheros de configuración](#ficheros_config)
 - [Interactuando con el chaincode `asset-transfer-basic`](#fabconnect_testnetwork_interactuando_cc)
-  * [En el modo `fabconnect` y `test-network` (incluyendo `test-network-nano-bash`)](#fabconnect_testnetwork_interactuando_cc_modo1)
+  * [En el modo `fabconnect` con la `test-network` o `test-network-nano-bash` de Fabric](#fabconnect_testnetwork_interactuando_cc_modo1)
   * [En el modo `firefly-cli`](#fabconnect_testnetwork_interactuando_cc_modo2)
 - [Documentación](#doc)
 - [Solución de problemas](#troubleshooting)
@@ -168,14 +168,14 @@ Si se ejecuta bien, la terminal debe mostrar la siguiente salida:
 ## Usando firefly-cli<a name="fireflycli"></a>
 
 ### Descarga e instalación del __CLI__<a name="descarga_instalacion"></a>
-Seguimos los pasos del README oficial para la [descarga](https://github.com/hyperledger/firefly-cli/#download-the-package-for-your-os), y [instalación](https://github.com/hyperledger/firefly-cli/#extract-the-binary-and-move-it-to-usrbinlocal) del cli.
+Sigue los pasos del README oficial para la [descarga](https://github.com/hyperledger/firefly-cli/#download-the-package-for-your-os), y [instalación](https://github.com/hyperledger/firefly-cli/#extract-the-binary-and-move-it-to-usrbinlocal) del cli.
 
 ### Crea un stack de __Hyperledger Fabric__<a name="stack_fabric"></a>
 El comando `ff init` crea un nuevo stack y le pide algunos datos, como la cantidad de miembros (organizaciones) que desea en su stack, el nombre de la(s) organización(es) y del(os) nodo(s)-par.
 ```bash
 ff init -b fabric --prompt-names stack-fabric
 ```
-Una vez terminada la ejecución del comando deberia ver una salida similar a esta:
+Una vez terminada la ejecución del comando debería ver una salida similar a esta:
 
 ```
 initializing new FireFly stack...
@@ -187,7 +187,7 @@ To start your new stack run:
 
   ff start stack-fabric
 ```
- > **NOTA**: Para este ejemplo se creó el stack `stack-fabric` con un solo miembro al que se denominó `"org1"` y un nodo nombrado `"peer1"`.
+ > **NOTA**: Para este ejemplo se creó el stack `stack-fabric` con un único miembro que nombrado `"org1"` y un nodo nombrado `"peer1"`.
 
 ### Ficheros de configuración<a name="ficheros_config"></a>
 
@@ -195,7 +195,7 @@ To start your new stack run:
 
 ## Interactuando con el chaincode `asset-transfer-basic`<a name="fabconnect_testnetwork_interactuando_cc"></a>
 
-### En el modo `fabconnect` y `test-network` (incluyendo `test-network-nano-bash`)<a name="fabconnect_testnetwork_interactuando_cc_modo1"></a>
+### En el modo `fabconnect` con la `test-network` o `test-network-nano-bash` de Fabric<a name="fabconnect_testnetwork_interactuando_cc_modo1"></a>
 
 - Si opera con la `test-network` puede instalar el chaincode `asset-transfer-basic` siguiendo los pasos: [Instalar asset-transfer-basic en test-network](https://hyperledger-fabric.readthedocs.io/en/latest/test_network.html#starting-a-chaincode-on-the-channel)
 

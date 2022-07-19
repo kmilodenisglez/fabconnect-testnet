@@ -31,7 +31,7 @@ This documentation shows several ways to deploy firefly-fabconnect:
   * [Create a stack of `Hyperledger Fabric`](#stack_fabric)
   * [Configuration files](#config_files)
 - [Interacting with the `asset-transfer-basic` chaincode](#fabconnect_testnetwork_interacting_cc)
-  * [In `fabconnect` and `test-network` mode (including `test-network-nano-bash`)](#fabconnect_testnetwork_interacting_cc_mode1)
+  * [In `fabconnect` mode with Fabric's `test-network` or `test-network-nano-bash`](#fabconnect_testnetwork_interacting_cc_mode1)
   * [In `firefly-cli` mode](#fabconnect_testnetwork_interacting_cc_mode2)
 - [Documentation](#doc)
 - [Troubleshooting](#troubleshooting)
@@ -191,7 +191,7 @@ To start your new stack run:
 
 ## Interacting with the `asset-transfer-basic` chaincode<a name="fabconnect_testnetwork_interacting_cc"></a>
 
-### In `fabconnect` and `test-network` mode (including `test-network-nano-bash`)<a name="fabconnect_testnetwork_interacting_cc_mode1"></a>
+### In `fabconnect` mode with Fabric's `test-network` or `test-network-nano-bash`<a name="fabconnect_testnetwork_interacting_cc_mode1"></a>
 
 - If you operate with the `test-network` you can install the `asset-transfer-basic` chaincode with the steps: [Install the asset-transfer-basic on test-network](https://hyperledger-fabric.readthedocs.io/en/latest/test_network.html#starting-a-chaincode-on-the-channel)
 
