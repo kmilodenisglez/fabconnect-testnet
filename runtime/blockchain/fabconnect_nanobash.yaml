@@ -7,15 +7,13 @@ receipts:
   retryinitialdelay: 5
   retrytimeout: 30
   leveldb:
-    path: /fabconnect/receipts
+    path: /home/my_user/fabconnect-testnet/runtime/blockchain/receipts
 events:
   webhooksAllowPrivateIPs: true
   leveldb:
-    path: /fabconnect/events
+    path: /home/my_user/fabconnect-testnet/runtime/blockchain/events
 http:
   port: 3000
-#   address: 0.0.0.0
-#   publicURL: http://ip:3000
 rpc:
   useGatewayClient: true
-  configpath: /fabconnect/ccp.yaml
+  configpath: /home/my_user/fabconnect-testnet/runtime/blockchain/ccp_nanobash.yaml

@@ -2,10 +2,14 @@
 
 This documentation shows several ways to deploy firefly-fabconnect:
 - Using `fabconnect` and the [Fabric `test-network`](https://github.com/hyperledger/fabric-samples/tree/main/test-network) in the samples repository.
-- Using `fabconnect` and the [Fabric `test-network-nano-bash`](https://github.com/hyperledger/fabric-samples/tree/main/test-network-nano-bash) in the samples repository. __in progress__
+  > This mode runs an instance of fabconnect using a docker container managed by docker-compose.
+- Using `fabconnect` and the [Fabric `test-network-nano-bash`](https://github.com/hyperledger/fabric-samples/tree/main/test-network-nano-bash) in the samples repository.
+  > This mode runs an instance of fabconnect compiled from source code.
+
 - Using `FireFly CLI`
 
-  > **NOTE**: The `FireFly CLI` run some Supernodes on your machine. The stacks contains an instance of firefly-core, firefly-dataexchange-https, ipfs and the firefly-sandbox.
+  > `FireFly CLI` mode runs some supernodes on your machine. The stack contains an instance of firefly-core, firefly-dataexchange-https, ipfs, and firefly-sandbox.
+
 
   👀 Si entiendes el español no dudes en visitar el [README-ES](./README-ES.md).
   
@@ -17,6 +21,11 @@ This documentation shows several ways to deploy firefly-fabconnect:
   * [Download configuration](#fabconnect_testnetwork_download_fabconnect)
   * [Bring up `fabconnect`](#fabconnect_testnetwork_bringup_fabconnect)
 - [Using fabconnect and the Fabric test-network-nano-bash](#fabconnect_testnetworknanobash)
+  * [Bring up `"test-network-nano-bash"`](#fabconnect_testnetwork_bringup_testnetworknanobash)
+  * [Download and build __fabconnect__](#download_fabconnect_build)
+  * [Download configuration](#fabconnect_testnetwork_download_fabconnect2)
+  * [Modify the cpp file for __test-network-nano-bash__](#fabconnect_testnetwork_modify_cpp)
+  * [Launch the connector](#fabconnect_testnetwork_launch_connector)
 - [Using firefly-cli](#fireflycli)
   * [Download and install the __CLI__](#download_installation)
   * [Create a stack of __Hyperledger Fabric__](#stack_fabric)
@@ -25,8 +34,11 @@ This documentation shows several ways to deploy firefly-fabconnect:
   * [In `fabconnect` and `test-network` mode (including `test-network-nano-bash`)](#fabconnect_testnetwork_interacting_cc_mode1)
   * [In `firefly-cli` mode](#fabconnect_testnetwork_interacting_cc_mode2)
 - [Documentation](#doc)
+- [Troubleshooting](#troubleshooting)
 
-## Using fabconnect and the Fabric test-network<a name="fabconnect_testnetworknanobash"></a>
+## Using fabconnect and the Fabric test-network<a name="fabconnect_testnetwork"></a>
+This mode runs an instance of fabconnect using a docker container managed by docker-compose.
+> **NOTE**: This mode has only been tested on Ubuntu 20.04.
 
 ### Download fabric-samples, docker images, and fabric binaries<a name="fabconnect_testnetwork_download_prerequisites"></a>
 
@@ -77,9 +89,77 @@ docker-compose up -d
 
 Visit the url: http://__ip_address_here__:3000/api
 
-## Using fabconnect and the Fabric test-network-nano-bash<a name="fabconnect_testnetworknanobas"></a>
+## Using fabconnect and the Fabric test-network-nano-bash<a name="fabconnect_testnetworknanobash"></a>
+In this mode, an instance of fabconnect that we built from the source code is used.
 
-In progress...
+> **NOTE**: This mode has been tested on `Ubuntu` and `Windows 10 with WSL`.
+
+### Bring up `"test-network-nano-bash"`<a name="fabconnect_testnetwork_bringup_testnetworknanobash"></a>
+
+👉🏾 [Follow the instructions to bring up network and install the chaincode.](https://github.com/hyperledger/fabric-samples/tree/main/test-network-nano-bash#test-network---nano-bash)
+
+### Download and build __fabconnect__<a name="download_fabconnect_build"></a>
+
+```bash
+cd $HOME
+```
+
+Download the fabconnect repository
+```bash
+git clone https://github.com/hyperledger/firefly-fabconnect.git
+```
+
+### Compile __fabconnect__
+```bash
+go mod vendor
+go build -o fabconnect
+```
+
+```bash
+cd $HOME
+```
+
+### Download configuration<a name="fabconnect_testnetwork_download_fabconnect2"></a>
+
+Download this repository
+```bash
+git clone https://github.com/kmilodenisglez/fabconnect-testnet.git
+```
+
+### Modify the cpp and fabconnect files for __test-network-nano-bash__ <a name="fabconnect_testnetwork_modify_cpp"></a>
+
+Modify in the test-network-nano-bash CCP file named `cpp_nanobash.yaml` the path to the artifacts. Wherever you find `'/home/my_user/fabric-samples'` you replace it with the path to your `fabric-samples`.
+
+Modify in the `fabconnect-testnet/runtime/blockchain/fabconnect_nanobash.yaml` file the paths. Wherever you find `'/home/my_user/fabconnect-testnet'` you replace it with the path to your `fabconnect-testnet`.
+
+
+###  Launch the connector <a name="fabconnect_testnetwork_launch_connector"></a>
+Before starting the fabconnect we must configure the identity (signer) that will be used to establish a connection with the blockchain network. The `test-network-nano-bash` does not bring up Fabric-CA nodes, so you have to use the `admin` identity generated by the `generate_artifacts.sh` script.
+
+We open in a file explorer the path where the credentials are stored. The path is defined in the CCP file `"cpp_nanobash.yaml"`, in the `client.credentialStore` section.
+
+For this example the `fabric-samples/test-network-nano-bash` is in the home directory.
+
+```bash
+cd ~/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users/
+```
+
+We copy the `Admin@org1.example.com-cert.pem` to the root directory of `/users` with the following format `user + @ + MSPID + "-cert.pem"`:
+
+```bash
+cp Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem ./admin@Org1MSP-cert.pem
+```
+> **NOTE**: It is the format used by fabric-sdk-go to store a user.
+
+Copy the `priv_sk` private key to the `/users/keystore/` directory:
+```bash
+cp Admin@org1.example.com/msp/keystore/priv_sk ./keystore/
+```
+
+Use the following command to launch the connector:
+```bash
+./fabconnect -f "/home/my_user/fabconnect-testnet/runtime/blockchain/fabconnect_nanobash.yaml"
+```
 
 ## Using firefly-cli<a name="fireflycli"></a>
 
@@ -206,3 +286,11 @@ If you use `firefly-cli` you can install and interact with the `asset-transfer-b
 - [FireFly Fabconnect - Github](https://github.com/hyperledger/firefly-fabconnect)
 - [FireFly Cli - Github](https://github.com/hyperledger/firefly-cli/)
 - [Firefly - Doc](https://hyperledger.github.io/firefly/)
+
+## Troubleshooting <a name="troubleshooting"></a>
+If fabconnect returned any `TRANSIENT_FAILURE` errors, one possible reason is that you need to add the domain names "peer0.org1.example.com", "orderer.example.com", and "org1.example.com" to the hosts ".
+
+Run the following:
+```bash
+echo '127.0.0.1 peer0.org1.example.com orderer.example.com org1.example.com' | sudo tee -a /etc/hosts
+```

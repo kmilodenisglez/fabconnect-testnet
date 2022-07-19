@@ -1,18 +1,23 @@
+# ***** certificateAuthorities section *****
+# The test-network-nano-bash does not start the Fabric-CA node, but we must keep the 
+# certificateAuthorities section because otherwise the fabconnect does not start
 certificateAuthorities:
-  org1.example.com:
+  ca.org1.example.com:
     tlsCACerts:
-      path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
-    url: http://127.0.0.1:7054
+      path: /home/my_user/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem
+    url: https://org1.example.com:7054
     registrar:
       enrollId: admin
       enrollSecret: adminpw
+    httpOptions:
+      verify: false
 channels:
   mychannel:
     orderers:
-    - fabric_orderer
-    - fabric_orderer2
+    - orderer1
+    # - orderer2
     peers:
-      fabric_peer:
+      peer1.org1.com:
         chaincodeQuery: true
         endorsingPeer: true
         eventSource: true
@@ -28,39 +33,75 @@ client:
       softVerify: true
   credentialStore:
     cryptoStore:
-      path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users
-    path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users
+      path: /home/my_user/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users
+    path: /home/my_user/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users
   cryptoconfig:
-    path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users
+    path: /home/my_user/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users
   logging:
     level: info
-  organization: org1.example.com
-  tlsCerts:
-    client:
-      cert:
-        path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.crt
-      key:
-        path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users/Admin@org1.example.com/tls/client.key
+  organization: org1
 orderers:
-  fabric_orderer:
+  orderer1:
     tlsCACerts:
-      path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
-    url: grpcs://127.0.0.1:6050
-  fabric_orderer2:
+      path: /home/my_user/fabric-samples/test-network-nano-bash/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+    url: grpcs://orderer.example.com:6050
+  orderer2:
     tlsCACerts:
-      path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
-    url: grpcs://127.0.0.1:6051
+      path: /home/my_user/fabric-samples/test-network-nano-bash/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
+    url: grpcs://orderer.example.com:6051
 organizations:
-  org1.example.com:
+  org1:
     certificateAuthorities:
-    - org1.example.com
-    cryptoPath: /tmp/msp
+    - ca.org1.example.com
+    cryptoPath:  /home/my_user/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/msp
     mspid: Org1MSP
     peers:
-    - fabric_peer
+    - peer1.org1.com
+  # org2:
+  #   cryptoPath:  /home/my_user/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org2.example.com/msp
+  #   mspid: Org2MSP
 peers:
-  fabric_peer:
+  peer1.org1.com:
     tlsCACerts:
-      path: /home/portainer/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
-    url: grpcs://127.0.0.1:7051
+      path: /home/my_user/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+    url: grpcs://peer0.org1.example.com:7051
 version: 1.1.0%
+
+entityMatchers:
+  peer:
+    - pattern: peer0.org1.example.(\w+)
+      urlSubstitutionExp: localhost:7051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
+      mappedHost: peer0.org1.example.com
+
+    - pattern: (\w+).org1.example.(\w+):(\d+)
+      urlSubstitutionExp: localhost:${2}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org1.example.com
+      mappedHost: ${1}.org1.example.com
+
+    - pattern: (\w+):7051
+      urlSubstitutionExp: localhost:7051
+      sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
+      mappedHost: peer0.org1.example.com
+
+  orderer:
+    - pattern: (\w+).example.(\w+)
+      urlSubstitutionExp: localhost:6050
+      sslTargetOverrideUrlSubstitutionExp: orderer.example.com
+      mappedHost: orderer.example.com
+
+    - pattern: (\w+).example.(\w+):(\d+)
+      urlSubstitutionExp: localhost:6050
+      sslTargetOverrideUrlSubstitutionExp: orderer.example.com
+      mappedHost: orderer.example.com
+
+  certificateAuthority:
+    - pattern: (\w+).org1.example.(\w+)
+      urlSubstitutionExp: https://localhost:7054
+      sslTargetOverrideUrlSubstitutionExp: org1.example.com
+      mappedHost: ca.org1.example.com
+
+  #   - pattern: (\w+).org2.example.(\w+)
+  #     urlSubstitutionExp: https://localhost:8054
+  #     sslTargetOverrideUrlSubstitutionExp: ca.org2.example.com
+  #     mappedHost: ca.org2.example.com
