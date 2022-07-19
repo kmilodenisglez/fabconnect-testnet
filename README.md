@@ -15,12 +15,12 @@ This documentation shows several ways to deploy firefly-fabconnect:
   
 ## Table of Contents
 
-- [Using fabconnect and the `Fabric test-network`](#fabconnect_testnetwork)
+- [Using fabconnect and the Fabric `test-network`](#fabconnect_testnetwork)
   * [Download fabric-samples, docker images, and fabric binaries](#fabconnect_testnetwork_download_prerequisites)
   * [Bring up the test network](#fabconnect_testnetwork_bringup_testnetwork)
   * [Download configuration](#fabconnect_testnetwork_download_fabconnect)
   * [Bring up `fabconnect`](#fabconnect_testnetwork_bringup_fabconnect)
-- [Using fabconnect and the `Fabric test-network-nano-bash`](#fabconnect_testnetworknanobash)
+- [Using fabconnect and the Fabric `test-network-nano-bash`](#fabconnect_testnetworknanobash)
   * [Bring up `"test-network-nano-bash"`](#fabconnect_testnetwork_bringup_testnetworknanobash)
   * [Download and build `fabconnect`](#download_fabconnect_build)
   * [Download configuration](#fabconnect_testnetwork_download_fabconnect2)
@@ -36,7 +36,7 @@ This documentation shows several ways to deploy firefly-fabconnect:
 - [Documentation](#doc)
 - [Troubleshooting](#troubleshooting)
 
-## Using fabconnect and the `Fabric test-network` <a name="fabconnect_testnetwork"></a>
+## Using fabconnect and the Fabric `test-network` <a name="fabconnect_testnetwork"></a>
 This mode runs an instance of fabconnect using a docker container managed by docker-compose.
 > **NOTE**: This mode has only been tested on Ubuntu 20.04.
 
@@ -89,7 +89,7 @@ docker-compose up -d
 
 Visit the url: http://__ip_address_here__:3000/api
 
-## Using fabconnect and the `Fabric test-network-nano-bash` <a name="fabconnect_testnetworknanobash"></a>
+## Using fabconnect and the Fabric `test-network-nano-bash` <a name="fabconnect_testnetworknanobash"></a>
 In this mode, an instance of fabconnect that we built from the source code is used.
 
 > **NOTE**: This mode has been tested on `Ubuntu` and `Windows 10 with WSL`.
