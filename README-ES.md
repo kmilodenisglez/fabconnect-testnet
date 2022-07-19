@@ -174,17 +174,20 @@ mkdir -p ./keystore && cp User1@org1.example.com/msp/keystore/priv_sk ./keystore
 La estructura debería quedar así:
 ```bash
 my_user@208996:~/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users$ ls -l
-total 20
 drwxr-xr-x 4 my_user my_user 4096 Jul 19 09:59 Admin@org1.example.com
--rw-rw-r-- 1 my_user my_user  810 Jul 19 10:22 `admin@Org1MSP-cert.pem`
-drwxrwxr-x 2 my_user my_user 4096 Jul 19 10:28 `keystore`
+-rw-rw-r-- 1 my_user my_user  810 Jul 19 10:22 admin@Org1MSP-cert.pem
+drwxrwxr-x 2 my_user my_user 4096 Jul 19 10:28 keystore
 drwxr-xr-x 4 my_user my_user 4096 Jul 19 09:59 User1@org1.example.com
--rw-rw-r-- 1 my_user my_user  810 Jul 19 10:23 `user1@Org1MSP-cert.pem`
+-rw-rw-r-- 1 my_user my_user  810 Jul 19 10:23 user1@Org1MSP-cert.pem
+```
+
+```bash
+cd $HOME
 ```
 
 Utilice el siguiente comando para iniciar el conector:
 ```bash
-./fabconnect -f "/home/my_user/fabconnect-testnet/runtime/blockchain/fabconnect_nanobash.yaml"
+fabconnect -f "/home/my_user/fabconnect-testnet/runtime/blockchain/fabconnect_nanobash.yaml"
 ```
 
 Si se ejecuta bien, la terminal debe mostrar la siguiente salida:
@@ -276,9 +279,7 @@ Invoca el endpoint POST /query, con los datos siguientes:
     "chaincode": "basic"
   },
   "func": "GetAllAssets",
-  "args": [
-    "string"
-  ],
+  "args": [],
   "strongread": true
 }
 ```
