@@ -132,12 +132,12 @@ git clone https://github.com/kmilodenisglez/fabconnect-testnet.git
 
 ### Modificar los ficheros cpp y fabconnect para __test-network-nano-bash__ <a name="fabconnect_testnetwork_modify_cpp"></a>
 
-Modifique en el archivo CCP de la test-network-nano-bash nombrado `cpp_nanobash.yaml` el camino a los artefactos. Donde encuentres `'/home/my_user/fabric-samples'` lo remplazas por el camino a la carpeta `fabric-samples`.
+Modifique en el archivo CCP `fabconnect-testnet/runtime/blockchain/cpp_nanobash.yaml` el camino a los artefactos. Donde encuentres `'/home/my_user/fabric-samples'` lo remplazas por el camino a la carpeta `fabric-samples`.
 
 Modifique en el archivo `fabconnect-testnet/runtime/blockchain/fabconnect_nanobash.yaml` las rutas. Dondequiera que encuentre `'/home/my_user/fabconnect-testnet', reemplácelo con la ruta a su `fabconnect-testnet`.
 
 ###  Iniciar el conector <a name="fabconnect_testnetwork_iniciar_connector"></a>
-Antes de iniciar el fabconnect debemos configurar la identidad (signer) que se va emplear para establecer conexión con la red blockchain. El `test-network-nano-bash` no levanta nodos de Fabric-CA, por lo que se tiene que usar la identidad `admin` generada por el script `generate_artifacts.sh`.
+Antes de iniciar el fabconnect debemos configurar la identidad (signer) que se va emplear para establecer conexión con la red blockchain. El `test-network-nano-bash` no levanta nodos de Fabric-CA, por lo que se tiene que usar la identidad `admin` o `user1` generada por el script `generate_artifacts.sh`.
 
 Abrimos en un explorador de fichero el camino donde se almacenan las credenciales. El camino está definido en el archivo CCP `"cpp_nanobash.yaml"`, en la sección `cliente.credentialStore`.
 
@@ -147,15 +147,39 @@ Para este ejemplo el `fabric-samples/test-network-nano-bash` se encuentra en el 
 cd ~/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users/
 ```
 
-Copiamos el `Admin@org1.example.com-cert.pem` para el directorio raiz del `/users` con el formato siguiente `user + @ + MSPID + "-cert.pem"` :
+Copia el `Admin@org1.example.com-cert.pem` para el directorio raiz del `/users` con el formato siguiente `user + @ + MSPID + "-cert.pem"` :
 ```bash
 cp Admin@org1.example.com/msp/signcerts/Admin@org1.example.com-cert.pem ./admin@Org1MSP-cert.pem
 ```
+
+Copia el `User1@org1.example.com-cert.pem` para el directorio raiz del `/users` con el formato siguiente `user + @ + MSPID + "-cert.pem"` :
+```bash
+cp User1@org1.example.com/msp/signcerts/User1@org1.example.com-cert.pem ./user1@Org1MSP-cert.pem
+```
+
 > **NOTA**: Ese es el formato que usa el fabric-sdk-go para almacenar un usuario.
 
-Copiamos la llave privada `priv_sk` para el directorio  `/users/keystore/`:
+Copia y renombra la llave privada `priv_sk` de cada usuario para el directorio  `/users/keystore/`:
+
+Llave privada del admin:
 ```bash
-cp Admin@org1.example.com/msp/keystore/priv_sk ./keystore/
+mkdir -p ./keystore && cp Admin@org1.example.com/msp/keystore/priv_sk ./keystore/admin_sk
+```
+
+Llave privada del user1:
+```bash
+mkdir -p ./keystore && cp User1@org1.example.com/msp/keystore/priv_sk ./keystore/user1_sk
+```
+
+La estructura debería quedar así:
+```bash
+my_user@208996:~/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/users$ ls -l
+total 20
+drwxr-xr-x 4 my_user my_user 4096 Jul 19 09:59 Admin@org1.example.com
+-rw-rw-r-- 1 my_user my_user  810 Jul 19 10:22 `admin@Org1MSP-cert.pem`
+drwxrwxr-x 2 my_user my_user 4096 Jul 19 10:28 `keystore`
+drwxr-xr-x 4 my_user my_user 4096 Jul 19 09:59 User1@org1.example.com
+-rw-rw-r-- 1 my_user my_user  810 Jul 19 10:23 `user1@Org1MSP-cert.pem`
 ```
 
 Utilice el siguiente comando para iniciar el conector:
