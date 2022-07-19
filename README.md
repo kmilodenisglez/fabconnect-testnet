@@ -92,7 +92,7 @@ Visit the url: http://__ip_address_here__:3000/api
 ## Using fabconnect and the Fabric `test-network-nano-bash` <a name="fabconnect_testnetworknanobash"></a>
 In this mode, an instance of fabconnect that we built from the source code is used.
 
-> **NOTE**: This mode has been tested on `Ubuntu` and `Windows 10 with WSL`.
+> **NOTE**: This mode has been tested on `Ubuntu` and on `Windows 10 with WSL`. The network was bring up with the minimum configuration, with two orderer nodes (__./orderer1.sh__ and __./orderer2.sh__) and a single Org1 peer node (__./peer1.sh__).
 
 ### Bring up `"test-network-nano-bash"`<a name="fabconnect_testnetwork_bringup_testnetworknanobash"></a>
 
