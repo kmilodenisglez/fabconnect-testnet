@@ -44,11 +44,11 @@ orderers:
   orderer1:
     tlsCACerts:
       path: /home/my_user/fabric-samples/test-network-nano-bash/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
-    url: grpcs://orderer.example.com:6050
+    url: orderer.example.com:6050
   orderer2:
     tlsCACerts:
       path: /home/my_user/fabric-samples/test-network-nano-bash/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
-    url: grpcs://orderer.example.com:6051
+    url: orderer.example.com:6051
 organizations:
   org1:
     certificateAuthorities:
@@ -64,7 +64,7 @@ peers:
   peer1.org1.com:
     tlsCACerts:
       path: /home/my_user/fabric-samples/test-network-nano-bash/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
-    url: grpcs://peer0.org1.example.com:7051
+    url: peer0.org1.example.com:7051
 version: 1.1.0%
 
 entityMatchers:
