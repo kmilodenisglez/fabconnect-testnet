@@ -79,7 +79,7 @@ git clone https://github.com/kmilodenisglez/fabconnect-testnet.git
 > **NOTE**: This repository has a docker-compose file that starts a firefly-fabconnect container. It is configured to mount the cryptographic artifacts volume from `$HOME/fabric-samples/test-network/organizations/`.
 
 ```bash
-cd fabconnect
+cd fabconnect-testnet
 ```
 ### Bring up `fabconect`<a name="fabconnect_testnetwork_bringup_fabconnect"></a>
 
