@@ -13,9 +13,9 @@ certificateAuthorities:
       verify: false
 channels:
   mychannel:
-    orderers:
-    - orderer1
-    - orderer2
+#    orderers:
+#    - orderer1
+#    - orderer2
     peers:
       peer1.org1.com:
         chaincodeQuery: true

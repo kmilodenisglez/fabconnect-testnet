@@ -40,7 +40,7 @@ orderers:
   orderer1:
     tlsCACerts:
       path: /etc/firefly/organizations/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
-    url: grpcs://orderer.example.com:7050
+    url: orderer.example.com:7050
 organizations:
   org1:
     certificateAuthorities:
@@ -56,45 +56,45 @@ peers:
   peer1.org1.com:
     tlsCACerts:
       path: /etc/firefly/organizations/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
-    url: grpcs://peer0.org1.example.com:7051
-    # grpcOptions:
-    #   ssl-target-name-override: peer0.org1.example.com
-    #   hostnameOverride: peer0.org1.example.com
+    url: 172.24.236.188:7051
+    grpcOptions:
+      ssl-target-name-override: peer0.org1.example.com
+      hostnameOverride: peer0.org1.example.com
 version: 1.1.0%
 
 entityMatchers:
   peer:
     - pattern: peer0.org1.example.(\w+)
-      urlSubstitutionExp: localhost:7051
+      urlSubstitutionExp: 172.24.236.188:7051
       sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
       mappedHost: peer0.org1.example.com
 
     - pattern: (\w+).org1.example.(\w+):(\d+)
-      urlSubstitutionExp: localhost:${2}
+      urlSubstitutionExp: 172.24.236.188:${2}
       sslTargetOverrideUrlSubstitutionExp: ${1}.org1.example.com
       mappedHost: ${1}.org1.example.com
 
     - pattern: (\w+):7051
-      urlSubstitutionExp: localhost:7051
+      urlSubstitutionExp: 172.24.236.188:7051
       sslTargetOverrideUrlSubstitutionExp: peer0.org1.example.com
       mappedHost: peer0.org1.example.com
 
   orderer:
 
     - pattern: (\w+).example.(\w+)
-      urlSubstitutionExp: localhost:7050
+      urlSubstitutionExp: 172.24.236.188:7050
       sslTargetOverrideUrlSubstitutionExp: orderer.example.com
       mappedHost: orderer.example.com
 
     - pattern: (\w+).example.(\w+):(\d+)
-      urlSubstitutionExp: localhost:7050
+      urlSubstitutionExp: 172.24.236.188:7050
       sslTargetOverrideUrlSubstitutionExp: orderer.example.com
       mappedHost: orderer.example.com
 
   certificateAuthority:
     - pattern: (\w+).org1.example.(\w+)
-      urlSubstitutionExp: https://localhost:7054
-      sslTargetOverrideUrlSubstitutionExp: org1.example.com
+      urlSubstitutionExp: https://172.24.236.188:7054
+      sslTargetOverrideUrlSubstitutionExp: ca.org1.example.com
       mappedHost: ca.org1.example.com
 
   #   - pattern: (\w+).org2.example.(\w+)
