@@ -10,14 +10,18 @@ services:
             - ./runtime/blockchain/fabconnect.yaml:/fabconnect/fabconnect.yaml
             - ./runtime/blockchain/ccp_testnetwork.yaml:/fabconnect/ccp.yaml
             - $HOME/fabric-samples/test-network/organizations:/etc/firefly/organizations
-        network_mode: host
-        dns_search:
-            - 8.8.8.8
-        # extra_hosts:
-        #     - "org1.example.com:127.0.0.11"
-        #     - "org1.example.com:127.0.0.1"
-        # ports:
-            # - 3000:3000
+
+         # If your services are listening on “localhost” and not on the Docker network (172.x.x.x),
+         # you need to run your container on the host network (network_mode)
+#        network_mode: host
+
+         # In Mac to connect to the Docker host from inside a Docker container, use the "host.docker.internal" hostname
+         # should work without additional configuration, but if not, you can set the extra host this way.
+         # With "host-gateway" instead of an IP address.
+#        extra_hosts:
+#            - "host.docker.internal:host-gateway"
+        ports:
+            - "3000:3000"
         healthcheck:
             test:
                 - CMD
